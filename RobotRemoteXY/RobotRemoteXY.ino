@@ -66,10 +66,6 @@ int ordre_bouge = 1;
 
   int troisP[3] = {positionBG,positionBD,positionT};
   int troisPO[3] = {old_positionBG,old_positionBD,old_positionT};
-
-int const potBG = A0;
-int const potBD = A2;
-int const potTete = A1;
 void setup() {
   // put your setup code here, to run once:
 
