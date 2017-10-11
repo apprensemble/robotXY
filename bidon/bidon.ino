@@ -6,23 +6,12 @@
 //////////////////////////////////////////////
 
 // RemoteXY select connection mode and include library 
-/*
-#define REMOTEXY_MODE__SOFTSERIAL
-#include <SoftwareSerial.h>
-
-#include <RemoteXY.h>
-
-// RemoteXY connection settings 
-#define REMOTEXY_SERIAL_RX 12
-#define REMOTEXY_SERIAL_TX 13
-#define REMOTEXY_SERIAL_SPEED 9600
-*/
 #define REMOTEXY_MODE__SERIAL 
 #include <RemoteXY.h> 
 
 /* RemoteXY connection settings */ 
 #define REMOTEXY_SERIAL Serial 
-#define REMOTEXY_SERIAL_SPEED 9600  
+#define REMOTEXY_SERIAL_SPEED 9600 
 
 // RemoteXY configurate  
 #pragma pack(push, 1)
@@ -52,25 +41,36 @@ struct {
 
 #define PIN_OD 5 //oeil droit
 #define PIN_OG 4 //oeil gauche
-/*
-Servo brasGauche;
-Servo brasDroit;
-Servo tete;
-
-int valBD;
-int valBG;
-int valTete;
 
 double check_attach;
+int ordre_bouge = 1;
+
+//declaration tete
+#define PIN_TETE 10
+#define PIN_BG 9
+Servo tete;
+int valTete;
+int positionT; //tete
+int old_positionT = 0; //tete
+
+Servo brasGauche;
+//Servo brasDroit;
+
+
+//int valBD;
+int valBG;
+
+
+
 
 int positionBG; //bras gauche
-int positionBD; //bras droit
-int positionT; //tete
+//int positionBD; //bras droit
+
 int old_positionBG = 0; //bras gauche
-int old_positionBD = 0; //bras droit
-int old_positionT = 0; //tete
-int ordre_bouge = 1;
-*/
+//int old_positionBD = 0; //bras droit
+
+
+
 void setup() {
   // put your setup code here, to run once:
 
@@ -79,16 +79,19 @@ void setup() {
   pinMode (PIN_OD, OUTPUT);
   pinMode (PIN_OG, OUTPUT);
 
- /* brasGauche.attach(11);
-  tete.attach(10);
-  brasDroit.attach(9);*/
+  tete.attach(PIN_TETE);
+  RemoteXY.tete = 50;
+  
+  brasGauche.attach(PIN_BG);
+    RemoteXY.bras_gauche = 50;
+
+  //brasDroit.attach(9);*/
   Serial.begin(9600);
   digitalWrite(PIN_OD,HIGH);
   digitalWrite(PIN_OG,HIGH);
 
   RemoteXY.bras_droit = 50;
-  RemoteXY.tete = 50;
-  RemoteXY.bras_gauche = 50;
+
 
 
 }
@@ -99,41 +102,43 @@ void loop() {
   RemoteXY_Handler ();
     digitalWrite(PIN_OD, (RemoteXY.oeil_droit==0)?LOW:HIGH);
   digitalWrite(PIN_OG, (RemoteXY.oeil_gauche==0)?LOW:HIGH);
-/*
-  positionBG = map(RemoteXY.bras_droit, 0, 100, 0, 179);
   positionT = map(RemoteXY.tete, 100, -100, 0, 179);
-  positionBD = map(RemoteXY.bras_gauche, 100, 0, 0, 179);
-  if (positionBD != old_positionBD) ordre_bouge = 1;
-  if (positionBG != old_positionBG) ordre_bouge = 1;
+
+  positionBG = map(RemoteXY.bras_droit, 0, 100, 0, 179);
   if (positionT != old_positionT) ordre_bouge = 1;
+
+  
+  //positionBD = map(RemoteXY.bras_gauche, 100, 0, 0, 179);
+  //if (positionBD != old_positionBD) ordre_bouge = 1;
+  if (positionBG != old_positionBG) ordre_bouge = 1;
+  
   if (ordre_bouge == 1) {
     old_positionT = positionT;
     old_positionBG = positionBG;
-    old_positionBD = positionBD; 
-    //bouge();
+    //old_positionBD = positionBD; 
+    bouge();
   }
   else {
     if (check_attach > 1000) {
-      brasGauche.detach();
-  tete.detach();
-  brasDroit.detach();
+      //brasGauche.detach();
+  //tete.detach();
+  //brasDroit.detach();
     }
   
   }
-*/  
     
 }
-/*
+
 void bouge() {
-  brasGauche.attach(11);
-  tete.attach(10);
-  brasDroit.attach(9);
+  //brasGauche.attach(PIN_BG);
+  //tete.attach(PIN_TETE);
+  //brasDroit.attach(9);
   brasGauche.write(positionBG);
   tete.write(positionT);
-  brasDroit.write(positionBD);
+  //brasDroit.write(positionBD);
   ordre_bouge = 0;
    affiche();
-   delay(150);
+   // delay(150);
    check_attach = millis();
 }
 
@@ -143,6 +148,6 @@ void affiche() {
   Serial.print(",");
   Serial.print(positionT);
   Serial.print(",");
-  Serial.println(positionBD);
+  //Serial.println(positionBD);
 }
-*/
+
