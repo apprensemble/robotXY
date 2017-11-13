@@ -31,7 +31,6 @@
 char *ssid     = "Livebox-CFFC";
 char *password = "CF5341C5D91651E54127C6E947";
 char *hostName = "rxy";
-#define REMOTEXY__DEBUGLOGS Serial
 #include <ESP8266WiFi.h>
 
 #define REMOTEXY_MODE__ESP8266WIFI_LIB
