@@ -17,3 +17,9 @@ Ce post explique comment creer de multiple session remoteXY sur un nodeMCU :)
 
 La maniere classique ne fonctionne pas mais cette méthode fonctionne.
 NB : l'API a du changer depuis le post car il faut ajouter un paramettre mot de passe d'accès. Je l'ai mis à vide dans mon exemple :)
+
+# Note :
+
+RobotXY1 est la version arduino sans parkinson. Il fallait utiliser l'UART pour communiquer avec le bluetooth. C'est le mode hardserial.
+
+/!\ Penser à reorganiser tt cela afin qu'il y ai bien une version arduino et une version nodemcu. Aujourd'hui pas le temps ce travail va me servir de base pour la creation d'une doc pour un oscilloscope.
